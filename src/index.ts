@@ -19,12 +19,13 @@ type Props = {
 const withLinkedAsset: ConfigPlugin<string[]> = (config, props) => {
   const expanded = props
     .map((filePath) => {
-      if (fs.statSync(filePath).isDirectory()) {
+      const resolved = path.resolve(config._internal?.projectRoot, filePath);
+      if (fs.statSync(resolved).isDirectory()) {
         return fs
-          .readdirSync(filePath)
-          .map((file) => path.join(filePath, file));
+          .readdirSync(resolved)
+          .map((file) => path.join(resolved, file));
       }
-      return [filePath];
+      return [resolved];
     })
     .flat();
   debug("All files:", expanded);
