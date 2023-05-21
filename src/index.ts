@@ -95,6 +95,7 @@ const withIosLinkedAsset: ConfigPlugin<Props> = (
 
     addResourceFile(font);
     addResourceFile(image);
+    addResourceFile(Object.values(rest).flat());
 
     return config;
   });
